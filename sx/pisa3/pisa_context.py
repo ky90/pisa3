@@ -8,13 +8,23 @@ __reversion__ = "$Revision: 20 $"
 __author__    = "$Author: holtwick $"
 __date__      = "$Date: 2007-10-09 12:58:24 +0200 (Di, 09 Okt 2007) $"
 
-from pisa_util import *
-from pisa_reportlab import *
+from .pisa_util import *
+from .pisa_reportlab import *
 
-import pisa_default
-import pisa_parser
+#import pisa_default
+from .pisa_default import * 
+
+#import pisa_parser
+from .pisa_parser import * 
+
 import re
-import urlparse
+#import urlparse
+try:
+    # For Python 3.0 and later
+    import urllib.parse as urlparse
+except ImportError:
+    # Fall back to Python 2.x's urlparse
+    import urlparse
 import types
 
 from reportlab.platypus.paraparser import ParaParser, ParaFrag, ps2tt, tt2ps, ABag
@@ -31,6 +41,8 @@ from reportlab.lib.fonts import addMapping
 from sx.w3c import css, cssDOMElementInterface
 
 from html5lib.sanitizer import *
+
+import sys 
 
 sizeDelta = 2       # amount to reduce font size by for super and sub script
 subFraction = 0.4   # fraction of font size that a sub script should be lowered
@@ -139,7 +151,10 @@ class pisaCSSBuilder(css.CSSBuilder):
             # Font weight
             fweight = str(data.get("font-weight", "normal")).lower() 
             bold = fweight in ("bold", "bolder", "500", "600", "700", "800", "900")            
-            if not bold and fweight<>"normal":   
+
+
+            #if not (bold and fweight <> "normal")
+            if not (bold and fweight != "normal"):  # pky 27/7/2018  - fix the python 3 cannot use <> 
                 log.warn(self.c.warning("@fontface, unknown value font-weight '%s'", fweight))             
                 
             # Font style
@@ -151,7 +166,7 @@ class pisaCSSBuilder(css.CSSBuilder):
                 src,
                 bold=bold,
                 italic=italic)
-        except Exception, e:
+        except Exception as e:
             log.warn(self.c.warning("@fontface"), exc_info=1)
         return {}, {}   
     
@@ -337,7 +352,7 @@ class pisaCSSBuilder(css.CSSBuilder):
             c.frameList = []
             c.frameStaticList = []
         
-        except Exception, e:            
+        except Exception as e:            
             log.warn(self.c.warning("@page"), exc_info=1)
                         
         return {}, {}
@@ -354,7 +369,7 @@ class pisaCSSBuilder(css.CSSBuilder):
                         self._pisaAddFrame(
                             name,
                             data))
-            except Exception, e:
+            except Exception as e:
                 log.warn(self.c.warning("@frame"), exc_info=1)            
         return {}, {}
 
@@ -950,5 +965,5 @@ class pisaContext:
                 else:
                     log.warning(self.warning("wrong attributes for <pdf:font>"))
     
-            except Exception, e:
+            except Exception as  e:
                 log.warn(self.warning("Loading font '%s'", fontName), exc_info=1)                

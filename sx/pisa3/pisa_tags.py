@@ -8,9 +8,9 @@ __reversion__ = "$Revision: 20 $"
 __author__    = "$Author: holtwick $"
 __date__      = "$Date: 2007-10-09 12:58:24 +0200 (Di, 09 Okt 2007) $"
 
-from pisa_default import DEFAULT_CSS
-from pisa_reportlab import *
-from pisa_util import *
+from .pisa_default import DEFAULT_CSS
+from .pisa_reportlab import *
+from .pisa_util import *
 
 from reportlab.graphics.barcode.code39 import Standard39
 from reportlab.lib.styles import ParagraphStyle
@@ -292,7 +292,7 @@ class pisaTagIMG(pisaTag):
                   
                     c.addStory(_img)
                     
-                except Exception, e:
+                except Exception as e:
                     log.warn(c.warning("Error in handling image '%s': %s", attr.src, str(e)))
         else:
             log.warn(c.warning("Need a valid file name!"))
@@ -313,7 +313,8 @@ class pisaTagHR(pisaTag):
 
 # --- Forms
 
-import pisa_reportlab
+#import pisa_reportlab
+from .pisa_reportlab import * 
 
 if 0:
     

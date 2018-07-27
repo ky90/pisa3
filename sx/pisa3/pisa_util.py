@@ -38,11 +38,19 @@ if not (reportlab.Version[:3]>="2.1"):
 REPORTLAB22 = (reportlab.Version[:3]>="2.1")
  
 log = logging.getLogger("ho.pisa")
-
+'''
 try: 
     import cStringIO as StringIO
 except:
     import StringIO
+'''
+
+# pky 27/7/2018
+try:
+    from StringIO import StringIO # python 2 
+except ImportError:
+    from io import StringIO # python 3 
+
 
 try:
     import pyPdf
@@ -145,7 +153,7 @@ def getColor(value, default=None):
         # XXX Throws illegal in 2.1 e.g. toColor('none'), 
         # therefore we have a workaround here 
         return _toColor(value) 
-    except ValueError, e:
+    except ValueError as e:
         log.warn("Unknown color %r", original)
     return default
 
@@ -251,7 +259,9 @@ def getBox(box, pagesize):
     """
     box = box.split()
     if len(box)!=4:
-        raise Exception, "box not defined right way"
+        #raise Exception , "box not defined right way"
+        raise Exception(Exception , "box not defined right way") # fix in the python3.x 
+
     x, y, w, h = map(getSize, box)
     return getCoords(x, y, w, h, pagesize)
 
@@ -261,7 +271,8 @@ def getPos(position, pagesize):
     """
     position = string.split(position)
     if len(position)!=2:
-        raise Exception, "position not defined right way"
+        #raise Exception , "position not defined right way"
+        raise Exception(Exception , "position not defined right way") # fix the python 3.x 
     x, y = map(getSize, position)
     return getCoords(x, y, None, None, pagesize)
 

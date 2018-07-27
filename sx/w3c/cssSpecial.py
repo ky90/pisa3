@@ -362,8 +362,8 @@ def parseSpecialRules(declarations, debug=0):
             log.debug("CSS special OUT:\n%s", "\n".join([repr(d) for d in dd]))
         
         if 0: #declarations!=dd:
-            print "###", declarations
-            print "#->", dd
+            print ("###", declarations)
+            print ("#->", dd)
         # CSS MODIFY! END
         return dd
 

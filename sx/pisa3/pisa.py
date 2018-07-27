@@ -13,14 +13,28 @@ import sys
 import os
 import os.path
 import glob
-import urllib2
-import urlparse
+#import urllib2
+try:
+    # For Python 3.0 and later
+    import urllib.request as urllib2
+except ImportError:
+    # Fall back to Python 2.x's urllib2
+    import urllib2
+
+#import urlparse
+try:
+    # For Python 3.0 and later
+    import urllib.parse as urlparse
+except ImportError:
+    # Fall back to Python 2.x's urlparse
+    import urlparse
+
 import tempfile
     
-from pisa_version import *
-from pisa_document import *
-from pisa_util import log
-from pisa_default import DEFAULT_CSS
+from .pisa_version import *
+from .pisa_document import *
+from .pisa_util import log
+from .pisa_default import DEFAULT_CSS
 
 __version__ = VERSION
 
@@ -107,7 +121,7 @@ LOG_FORMAT_DEBUG = "%(levelname)s [%(name)s] %(pathname)s line %(lineno)d: %(mes
 #    print options, args
 
 def usage():
-    print USAGE
+    print (USAGE) # used for python 3.x 
 
 class pisaLinkLoader:
 
@@ -150,11 +164,11 @@ class pisaLinkLoader:
             tfile.close()
             self.tfileList.append(path)
             if not self.quiet:
-                print "  Loading", url, "to", path
+                print ("  Loading", url, "to", path) # fix for python 3.x 
             return path
-        except Exception, e:
+        except Exception as e:
             if not self.quiet:
-                print "  ERROR:", e
+                print ("  ERROR:", e)
             log.exception("pisaLinkLoader.getFileName")
         return None
     
@@ -248,7 +262,7 @@ def command():
 #            booklet = a
 
         if o in ("--copyright", "--version"):
-            print COPYRIGHT
+            print (COPYRIGHT)
             sys.exit(0)
 
 #        if o in ("--tempdir",):
@@ -270,7 +284,7 @@ def command():
 
         if o in ("--css-dump",):
             # CSS dump
-            print DEFAULT_CSS
+            print (DEFAULT_CSS)
             return 
 
         if o in ("-x", "--xml", "--xhtml"):
@@ -356,13 +370,13 @@ def command():
             try:
                 open(dest, "wb").close()
             except:
-                print "File '%s' seems to be in use of another application." % dest
+                print ("File '%s' seems to be in use of another application." % dest)
                 sys.exit(2)
             fdest = open(dest, "wb")
             fdestclose = 1
     
         if not quiet:
-            print "Converting %s to %s..." % (src, dest)          
+            print ("Converting %s to %s..." % (src, dest))          
     
         pdf = pisaDocument(
             fsrc,
@@ -392,11 +406,11 @@ def command():
             #        print "%s in line %d: %s" % (mode, line, msg)
         
             if pdf.err:
-                print "*** %d ERRORS OCCURED" % pdf.err
+                print ("*** %d ERRORS OCCURED" % pdf.err)
                     
         if (not pdf.err) and startviewer:
             if not quiet:
-                print "Open viewer for file %s" % dest
+                print ("Open viewer for file %s" % dest)
             startViewer(dest)
     
     if errors:

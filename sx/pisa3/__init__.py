@@ -25,8 +25,10 @@ Optional packages:
 """.lstrip()
 
 try:
-    from pisa import *
-except ImportError, e:
+    #from pisa import *
+    from .pisa import *
+#except ImportError , e:
+except ImportError as e:
     import sys
     sys.stderr.write(REQUIRED_INFO % e)
     raise

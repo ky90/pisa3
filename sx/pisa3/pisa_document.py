@@ -8,11 +8,11 @@ __reversion__ = "$Revision: 20 $"
 __author__    = "$Author: holtwick $"
 __date__      = "$Date: 2007-10-09 12:58:24 +0200 (Di, 09 Okt 2007) $"
 
-from pisa_context import pisaContext
-from pisa_parser import pisaParser
-from pisa_util import *
-from pisa_reportlab import *
-from pisa_default import DEFAULT_CSS
+from .pisa_context import pisaContext
+from .pisa_parser import pisaParser
+from .pisa_util import *
+from .pisa_reportlab import *
+from .pisa_default import DEFAULT_CSS
 
 import os
 import types

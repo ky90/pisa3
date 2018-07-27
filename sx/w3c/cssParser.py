@@ -33,7 +33,8 @@ Dependencies:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import re
-import cssSpecial
+#import cssSpecial
+from .cssSpecial import * 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~ Definitions
@@ -356,7 +357,7 @@ class CSSParser(object):
                         
             try:
                 src, stylesheet = self._parseStylesheet(src)
-            except self.ParseError, err:
+            except self.ParseError as err:
                 err.setFullCSSSource(src)
                 raise
         finally:
@@ -371,7 +372,7 @@ class CSSParser(object):
         try:
             try:
                 src, properties = self._parseDeclarationGroup(src.strip(), braces=False)
-            except self.ParseError, err:
+            except self.ParseError as err:
                 err.setFullCSSSource(src, inline=True)
                 raise
 
@@ -397,7 +398,7 @@ class CSSParser(object):
                     src, property = self._parseDeclarationProperty(src.strip(), propertyName)
                     properties.append(property)
 
-            except self.ParseError, err:
+            except self.ParseError as err:
                 err.setFullCSSSource(src, inline=True)
                 raise
 

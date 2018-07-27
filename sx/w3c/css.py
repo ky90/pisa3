@@ -37,15 +37,22 @@ Dependencies:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import copy
-import sets
-import cssParser
-import cssSpecial
+#import sets python 2.x
+try:
+    set # sets is Deprecated since version 2.6 or above :
+except NameError:
+    from sets import Set as set # python 2.6x below 
+
+#import cssParser
+from .cssParser import * 
+#import cssSpecial
+from .cssSpecial import * 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~ Constants / Variables / Etc.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-CSSParseError = cssParser.CSSParseError
+CSSParseError = CSSParseError
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~ Definitions
@@ -290,7 +297,8 @@ class CSSInlineSelector(CSSSelectorBase):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class CSSMutableSelector(CSSSelectorBase, cssParser.CSSSelectorAbstract):
+#class CSSMutableSelector(CSSSelectorBase, cssParser.CSSSelectorAbstract):
+class CSSMutableSelector(CSSSelectorBase, CSSSelectorAbstract):
     qualifiers = []
 
     def asImmutable(self):
@@ -523,10 +531,12 @@ class CSSInlineRuleset(CSSRuleset, CSSDeclarations):
 #~ CSS Builder
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class CSSBuilder(cssParser.CSSBuilderAbstract):
+#class CSSBuilder(cssParser.CSSBuilderAbstract):
+class CSSBuilder(CSSBuilderAbstract):
     RulesetFactory = CSSRuleset
     SelectorFactory = CSSMutableSelector
-    MediumSetFactory = sets.Set
+    #MediumSetFactory = sets.Set # python 2.x 
+    MediumSetFactory = set() # pky 27/7/2018 python 3.x don't need to import, it is built-in python 3.x function 
     DeclarationsFactory = CSSDeclarations
     TermFunctionFactory = CSSTerminalFunction
     TermOperatorFactory = CSSTerminalOperator
@@ -746,7 +756,8 @@ class CSSBuilder(cssParser.CSSBuilderAbstract):
 #~ CSS Parser -- finally!
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class CSSParser(cssParser.CSSParser):
+#class CSSParser(cssParser.CSSParser):
+class CSSParser(CSSParser):
     CSSBuilderFactory = CSSBuilder
 
     def __init__(self, cssBuilder=None, create=True, **kw):

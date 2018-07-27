@@ -8,8 +8,8 @@ __reversion__ = "$Revision: 20 $"
 __author__    = "$Author: holtwick $"
 __date__      = "$Date: 2007-10-09 12:58:24 +0200 (Di, 09 Okt 2007) $"
 
-from pisa_util import *
-from pisa_default import TAGS, STRING
+from .pisa_util import *
+from .pisa_default import TAGS, STRING
 
 from reportlab.platypus.doctemplate import BaseDocTemplate, PageTemplate, FrameBreak, NextPageTemplate
 from reportlab.platypus.tables import Table, TableStyle
@@ -100,7 +100,7 @@ class PmlPageTemplate(PageTemplate):
 
                     frame.addFromList(story, canvas)
 
-            except Exception, e:                
+            except Exception as e:                
                 log.debug("PmlPageTemplate", exc_info=1)
 
             try:

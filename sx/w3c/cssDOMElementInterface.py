@@ -13,13 +13,15 @@
 #~ Imports
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-import css
+#import css
+from .css import * 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~ Definitions
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class CSSDOMElementInterface(css.CSSElementInterfaceAbstract):
+#class CSSDOMElementInterface(css.CSSElementInterfaceAbstract):
+class CSSDOMElementInterface(CSSElementInterfaceAbstract):
     """An implementation of css.CSSElementInterfaceAbstract for xml.dom Element Nodes"""
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,7 +68,8 @@ class CSSDOMElementInterface(css.CSSElementInterfaceAbstract):
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def matchesNode(self, (namespace, tagName)):
+    #def matchesNode(self, (namespace, tagName)):
+    def matchesNode(self, namespace, tagName): # pky 27/7/2018 - try to fix this in python 3.x 
         if tagName not in ('*', self.domElement.tagName):
             return False
         if namespace in (None, '', '*'):

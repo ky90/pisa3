@@ -20,10 +20,10 @@ from html5lib import treebuilders, serializer, treewalkers, inputstream
 from xml.dom import Node
 import xml.dom.minidom
 
-from pisa_default import *
-from pisa_util import *
-from pisa_tags import *
-from pisa_tables import *
+from .pisa_default import *
+from .pisa_util import *
+from .pisa_tags import *
+from .pisa_tables import *
 
 import sx.w3c.css as css
 import sx.w3c.cssDOMElementInterface as cssDOMElementInterface
@@ -114,7 +114,7 @@ def pisaGetAttributes(c, tag, attributes):
             #    if not nattrs.has_key(k):
             #        c.warning("attribute '%s' for tag <%s> not supported" % (k, tag))
 
-            except Exception, e:
+            except Exception as e:
                 log.exception(c.error("Tag handling"))
 
     #else:
@@ -520,9 +520,9 @@ def pisaLoop(node, c, path=[], **kw):
             if pageBreakAfter:
                 c.addStory(PageBreak()) 
                 if pageBreakAfter==PAGE_BREAK_RIGHT:
-            				c.addStory(PmlRightPageBreak())
+                           c.addStory(PmlRightPageBreak())
                 if pageBreakAfter==PAGE_BREAK_LEFT:
-            				c.addStory(PmlLeftPageBreak())
+                           c.addStory(PmlLeftPageBreak())
             if frameBreakAfter:                
                 c.addStory(FrameBreak()) 
 
